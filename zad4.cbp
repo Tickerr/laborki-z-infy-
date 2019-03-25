@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
@@ -12,10 +13,11 @@ int main()
     printf("\n1. Wprowadz dane");
     printf("\n2. Zapisz dane do pliku");
     printf("\n3. Pobierz dane z pliku");
-    printf("\n4. Wartosc minimalna i maksymalna");
-    printf("\n5. Wartosc srednia");
-    printf("\n6. Suma");
-    printf("\n7. Koniec");
+    printf("\n4. Wyswietl dane");
+    printf("\n5. Wartosc minimalna i maksymalna");
+    printf("\n6. Wartosc srednia");
+    printf("\n7. Suma");
+    printf("\n8. Koniec");
     //program
     do
     {
@@ -51,6 +53,20 @@ int main()
 
             break;
         case '4' :
+            printf("\nOto Twoja tablica liczb\n");
+            if((wsk=fopen("dane.txt", "r"))!=NULL);
+
+            if (wsk == NULL)
+            {
+                printf("Otwarcie nieudane");
+            }
+            while (fscanf(wsk, "%f", &tablica[i]) != EOF)
+            {
+                printf("i = %f\n", tablica[i]);
+            }
+            fclose(wsk);
+            break;
+        case '5' :
             printf("\nWartosc minimalna i maksymalna");
             wmin=tablica[0];
             for(i=0;i<5;i++)
@@ -64,26 +80,26 @@ int main()
                 wmax=tablica[i];
             printf("\nNajwieksza liczba to: %f", wmax);
             break;
-        case '5' :
+        case '6' :
             printf("\nWartosc srednia");
             wsr=0;
             for(i=0;i<5;i++)
                 wsr=wsr+tablica[i];
             printf("\nWartosc srednia wynosi: %f", wsr/i);
             break;
-        case '6' :
+        case '7' :
             suma=0;
             for(i=0;i<5;i++)
                 suma=suma+tablica[i];
             printf("\nSuma wszystkich elementow tablicy wynosi: %f\n", suma);
             break;
-        case '7' :
+        case '8' :
             printf("\nKoniec");
             break;
         default :
             printf("\nWybierz ponownie");
         };
     }
-    while (znak!='7');
+    while (znak!='8');
     return 0;
 }
