@@ -1,43 +1,89 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
-<CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
-	<Project>
-		<Option title="zad4" />
-		<Option pch_mode="2" />
-		<Option compiler="gcc" />
-		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/zad4" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-g" />
-				</Compiler>
-			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/zad4" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
-				<Option type="1" />
-				<Option compiler="gcc" />
-				<Compiler>
-					<Add option="-O2" />
-				</Compiler>
-				<Linker>
-					<Add option="-s" />
-				</Linker>
-			</Target>
-		</Build>
-		<Compiler>
-			<Add option="-Wall" />
-		</Compiler>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
-		</Extensions>
-	</Project>
-</CodeBlocks_project_file>
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    char znak;
+    float tablica[5];
+    float suma, wmax, wmin, wsr; //zmienne
+    FILE *wsk;
+    //menu
+    printf("\nMenu");
+    printf("\n1. Wprowadz dane");
+    printf("\n2. Zapisz dane do pliku");
+    printf("\n3. Pobierz dane z pliku");
+    printf("\n4. Wartosc minimalna i maksymalna");
+    printf("\n5. Wartosc srednia");
+    printf("\n6. Suma");
+    printf("\n7. Koniec");
+    //program
+    do
+    {
+        fflush(stdin);
+        printf("\nWybor: ");
+        scanf("%c", &znak);
+        switch(znak) //switchcase
+        {
+        case '1' :
+            for(i=0;i<5;i++)
+            {
+                printf("\nPodaj element tablicy[%d] = ",i);
+                scanf("%f",&tablica[i]);
+            };
+            break;
+        case '2' :
+            printf("\nZapis danych\n");
+            if((wsk=fopen("dane.txt","w"))!=NULL)
+            {
+                for(i=0;i<5;i++)
+                    fprintf(wsk, "%f\n", tablica[i]);
+                fclose(wsk);
+            };
+            break;
+        case '3' :
+            printf("\nWczytywanie danych\n");
+            if((wsk=fopen("dane.txt", "r"))!=NULL)
+            {
+                for(i=0;i<5;i++)
+                    fscanf(wsk, "%f", &tablica[i]);
+                fclose(wsk);
+            };
+
+            break;
+        case '4' :
+            printf("\nWartosc minimalna i maksymalna");
+            wmin=tablica[0];
+            for(i=0;i<5;i++)
+                if(wmin>tablica[i])
+                wmin=tablica[i];
+            printf("\nNajmniejsza liczba to: %f", wmin);
+
+            wmax=tablica[0];
+            for(i=0;i<5;i++)
+                if(wmax<tablica[i])
+                wmax=tablica[i];
+            printf("\nNajwieksza liczba to: %f", wmax);
+            break;
+        case '5' :
+            printf("\nWartosc srednia");
+            wsr=0;
+            for(i=0;i<5;i++)
+                wsr=wsr+tablica[i];
+            printf("\nWartosc srednia wynosi: %f", wsr/i);
+            break;
+        case '6' :
+            suma=0;
+            for(i=0;i<5;i++)
+                suma=suma+tablica[i];
+            printf("\nSuma wszystkich elementow tablicy wynosi: %f\n", suma);
+            break;
+        case '7' :
+            printf("\nKoniec");
+            break;
+        default :
+            printf("\nWybierz ponownie");
+        };
+    }
+    while (znak!='7');
+    return 0;
+}
