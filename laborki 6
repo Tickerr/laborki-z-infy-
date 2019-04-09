@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//struktura
 struct baza
 {
-    char imie[10];
+    char imie[15];
     char nazwisko[25];
     int telefon;
 };
@@ -34,8 +35,13 @@ int main()
             printf("\nPodaj dane osoby:\n");
             printf("\tImie: "); scanf("%s",osoba.imie);
             printf("\tNazwisko: "); scanf("%s",osoba.nazwisko);
-            printf("\tTelefon: "); scanf("%d",&osoba.telefon);
-        break;
+            printf("\tTelefon: ");
+            while(scanf("%d", &osoba.telefon) != 1)
+                {
+                    while((osoba.telefon = getchar()) != '\n' && osoba.telefon != EOF);
+                    printf("Bledny numer telefonu, wpisz ponownie\n");
+                };
+            break;
         case '2' :
             printf("\nZapis danych\n");
             if((wsk_pliku=fopen("baza.txt","w+"))!=NULL)
@@ -82,4 +88,5 @@ int main()
     while (znak!='5');
     return 0;
 }
+
 
