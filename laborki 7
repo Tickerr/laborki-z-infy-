@@ -1,0 +1,137 @@
+klasa.h:
+
+#ifndef KLASA_H_INCLUDED
+#define KLASA_H_INCLUDED
+#include <iostream>
+using namespace std;
+class baza {
+private:
+ char imie[10];
+ char nazwisko[25];
+ char telefon[10];
+public:
+ void wpisz();
+ void wyswietl();
+ void zapisz();
+ void pobierz();
+};
+
+
+#endif // KLASA_H_INCLUDED
+
+------------------------------------------------------------------------
+
+klasa.cpp:
+
+#include "klasa.h"
+#include <fstream>
+#include <cstdlib>
+#include <string>
+
+void baza::wpisz()
+{
+ cout << "Podaj dane\n";
+ cout << "\tImie: ";
+ cin >> this->imie;
+ cout << "\tNazwisko: ";
+ cin >> this->nazwisko;
+ cout << "\tTelefon: ";
+ cin >> this->telefon;
+};
+void baza::wyswietl()
+{
+ cout << "Dane osobowe\n";
+ ifstream plik;
+
+plik.open("plik.txt", ios::in);
+if(plik.good() == true)
+{
+  cout << "\tImie: " << this->imie << "\n";
+  cout <<"\tNazwisko:"<< this->nazwisko << "\n";
+  cout <<"\tTelefon :"<< this->telefon << "\n";
+}
+else
+    cout << "Brak danych" << endl;
+
+};
+void baza::zapisz()
+{
+    string linia;
+    ofstream plik;
+
+    plik.open("plik.txt", ios::out | ios::app);
+    if(plik.good() == true)
+    {
+        plik << this->imie << endl;
+        plik << this->nazwisko << endl;
+        plik << this->telefon << endl;
+        plik.close();
+    }
+};
+void baza::pobierz()
+{
+
+    ifstream plik;
+
+    plik.open("plik.txt", ios::in);
+    if(plik.good() == true)
+    {
+        plik >> this->imie;
+        plik >> this->nazwisko;
+        plik >> this->telefon;
+        plik.close();
+    }
+    else
+        cout << "Plik nie istnieje\n" << endl;
+};
+
+--------------------------------------------------------------------------
+
+main.cpp:
+
+#include "klasa.h"
+#include "klasa.cpp"
+#include <conio.h>
+using namespace std;
+
+int main()
+{
+class baza osoba;
+char znak;
+//menu
+cout << "Menu" << endl;
+cout << "1. Wpisz dane" << endl;
+cout << "2. Zapisz dane do pliku" << endl;
+cout << "3. Pobierz dane z pliku" << endl;
+cout << "4. Wyswietl dane" << endl;
+cout << "5. Koniec" << endl;
+//program
+do
+{
+    fflush(stdin);
+    cout << "Twoj wybor: " << endl;
+    znak=getch();
+    switch(znak)
+    {
+    case '1':
+        osoba.wpisz();
+        break;
+    case '2':
+        osoba.zapisz();
+        break;
+    case '3':
+        osoba.pobierz();
+        break;
+    case '4':
+        osoba.wyswietl();
+        break;
+    case '5':
+        cout << "Koniec" <<endl;
+        break;
+    default:
+        cout << "Wybierz ponownie sposrod opcji 1-5." << endl;
+    }
+}
+while (znak!='5');
+return 0;
+}
