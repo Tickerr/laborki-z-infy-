@@ -1,0 +1,96 @@
+klasa.h
+
+#ifndef KLASA_H_INCLUDED
+#define KLASA_H_INCLUDED
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+class baza {
+private:
+ char imie[10];
+ char nazwisko[25];
+ char telefon[10];
+public:
+ baza(char *i, char *n, char *t);
+ ~baza();
+
+};
+#endif // KLASA_H_INCLUDED
+
+--------------------------------------------------------------
+klasa.cpp
+
+#include "klasa.h"
+#include <fstream>
+#include <cstdlib>
+
+ baza::baza(char *i, char *n, char *t)
+{
+ cout<<"Wprowadz dane:\n";
+ strcpy(this->imie,i);
+ strcpy(this->nazwisko,n);
+ strcpy(this->telefon,t);
+ cout<<"\tImie: "<<this->imie<<"\n";
+ cout<<"\tNaz.: "<<this->nazwisko<<"\n";
+ cout<<"\tTel.: "<<this->telefon<< "\n";
+};
+ baza::~baza()
+{
+ cout << "Usuwam:\n";
+ cout<<"\tImie: "<<this->imie<<"\n";
+ cout<<"\tNaz.: "<<this->nazwisko<<"\n";
+ cout<<"\tTel.: "<<this->telefon<< "\n";
+};
+
+--------------------------------------------------------
+main.cpp
+
+#include "klasa.h"
+#include "klasa.cpp"
+#include <conio.h>
+
+int main() {
+class baza **osoby=NULL;
+int i=0, n=0;
+char znak;
+
+cout << "Liczba danych: " << endl;
+cin >> n;
+osoby=new baza *[n];
+//menu
+cout << "Menu" << endl;
+cout << "1. Pobierz/wprowadz dane" << endl;
+cout << "2. Usun dane z pamieci" << endl;
+cout << "3. Wyswietl dane" << endl;
+cout << "4. Koniec" << endl;
+//program
+do
+{
+    fflush(stdin);
+    cout << "Twoj wybor: " << endl;
+    znak=getch();
+    switch(znak)
+    {
+    case '1':
+        for(i=0;i<n;i++)
+        osoby[i]=new baza("Mateusz","Pawlak","1235787");
+        break;
+    case '2':
+        for(i=0;i<n;i++)
+        delete osoby[i];
+        break;
+    case '3':
+        for(i=0;i<n;i++)
+        break;
+    case '4':
+        cout << "Koniec" << endl;
+        break;
+    default:
+        cout << "Wybierz ponownie sposrod opcji 1-4!" << endl;
+    }
+}
+while(znak!='4');
+delete [] osoby;
+return 0;
+}
