@@ -1,4 +1,4 @@
-klasa.h
+klasa.h 
 
 #ifndef KLASA_H_INCLUDED
 #define KLASA_H_INCLUDED
@@ -14,11 +14,12 @@ private:
 public:
  baza(char *i, char *n, char *t);
  ~baza();
-
+void load();
 };
 #endif // KLASA_H_INCLUDED
 
---------------------------------------------------------------
+------------------------------------
+
 klasa.cpp
 
 #include "klasa.h"
@@ -42,8 +43,16 @@ klasa.cpp
  cout<<"\tNaz.: "<<this->nazwisko<<"\n";
  cout<<"\tTel.: "<<this->telefon<< "\n";
 };
+void baza::load()
+{
 
---------------------------------------------------------
+ cout<<"\tImie: "<<this->imie<<"\n";
+ cout<<"\tNaz.: "<<this->nazwisko<<"\n";
+ cout<<"\tTel.: "<<this->telefon<< "\n";
+};
+
+-----------------------------------------
+
 main.cpp
 
 #include "klasa.h"
@@ -82,6 +91,7 @@ do
         break;
     case '3':
         for(i=0;i<n;i++)
+        osoby[i]->load();
         break;
     case '4':
         cout << "Koniec" << endl;
