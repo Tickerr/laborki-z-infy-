@@ -1,0 +1,118 @@
+klasa.h 
+
+#ifndef KLASA_H_INCLUDED
+#define KLASA_H_INCLUDED
+#include <iostream>
+#include <string.h>
+using namespace std;
+class baza {
+private:
+ char imie[10];
+ char nazwisko[25];
+ char telefon[10];
+ class baza *nastepny;
+public:
+ void dane(char*i,char*n,char*t);
+ void wyswietl();
+ void kasuj(int nr);
+ baza(class baza *obiekt);
+ ~baza();
+};
+
+
+
+#endif // KLASA_H_INCLUDED
+
+----------------------------------------------------------------
+
+klasa.cpp
+
+#include "klasa.h"
+#include <fstream>
+#include <cstdlib>
+void baza::dane(char *i, char *n, char *t){
+ strcpy(this->imie,i);
+ strcpy(this->nazwisko,n);
+ strcpy(this->telefon,t);
+};
+void baza::wyswietl(){
+ cout << "Lista:\n";
+ class baza *obiekt=this;
+ while (obiekt!=NULL) {
+ cout<<"\tImie: "<<obiekt->imie<<"\t";
+ cout<<"\tNazw:"<<obiekt->nazwisko <<"\t";
+ cout<<"\tTelefon:"<<obiekt->telefon<<"\n";
+ obiekt=obiekt->nastepny;
+ };
+};
+void baza::kasuj(int nr)
+{
+ int i=1;
+ cout << "Kasuje element nr=" << nr << "\n";
+ class baza *obiekt=this;
+ while(obiekt!=NULL)
+ {
+ if (i==nr-1)
+    {
+    class baza *tmp=obiekt->nastepny;
+    obiekt->nastepny=obiekt->nastepny->nastepny;
+    delete tmp;
+ };
+ obiekt=obiekt->nastepny;
+ i++;
+ };
+};
+baza::baza(class baza *obiekt){
+ this->nastepny=NULL;
+ if (obiekt!=NULL) obiekt->nastepny=this;
+};
+baza::~baza(){
+ cout << "Usuwam liste\n";
+};
+
+----------------------------------------------------------------------
+
+main.cpp
+
+#include "klasa.h"
+#include <fstream>
+#include <cstdlib>
+void baza::dane(char *i, char *n, char *t){
+ strcpy(this->imie,i);
+ strcpy(this->nazwisko,n);
+ strcpy(this->telefon,t);
+};
+void baza::wyswietl(){
+ cout << "Lista:\n";
+ class baza *obiekt=this;
+ while (obiekt!=NULL) {
+ cout<<"\tImie: "<<obiekt->imie<<"\t";
+ cout<<"\tNazw:"<<obiekt->nazwisko <<"\t";
+ cout<<"\tTelefon:"<<obiekt->telefon<<"\n";
+ obiekt=obiekt->nastepny;
+ };
+};
+void baza::kasuj(int nr)
+{
+ int i=1;
+ cout << "Kasuje element nr=" << nr << "\n";
+ class baza *obiekt=this;
+ while(obiekt!=NULL)
+ {
+ if (i==nr-1)
+    {
+    class baza *tmp=obiekt->nastepny;
+    obiekt->nastepny=obiekt->nastepny->nastepny;
+    delete tmp;
+ };
+ obiekt=obiekt->nastepny;
+ i++;
+ };
+};
+baza::baza(class baza *obiekt){
+ this->nastepny=NULL;
+ if (obiekt!=NULL) obiekt->nastepny=this;
+};
+baza::~baza(){
+ cout << "Usuwam liste\n";
+};
