@@ -75,44 +75,53 @@ baza::~baza(){
 main.cpp
 
 #include "klasa.h"
-#include <fstream>
-#include <cstdlib>
-void baza::dane(char *i, char *n, char *t){
- strcpy(this->imie,i);
- strcpy(this->nazwisko,n);
- strcpy(this->telefon,t);
-};
-void baza::wyswietl(){
- cout << "Lista:\n";
- class baza *obiekt=this;
- while (obiekt!=NULL) {
- cout<<"\tImie: "<<obiekt->imie<<"\t";
- cout<<"\tNazw:"<<obiekt->nazwisko <<"\t";
- cout<<"\tTelefon:"<<obiekt->telefon<<"\n";
- obiekt=obiekt->nastepny;
- };
-};
-void baza::kasuj(int nr)
+#include "klasa.cpp"
+#include <conio.h>
+int main()
 {
- int i=1;
- cout << "Kasuje element nr=" << nr << "\n";
- class baza *obiekt=this;
- while(obiekt!=NULL)
- {
- if (i==nr-1)
+class baza *lista=NULL,
+*osoba=NULL;
+char znak;
+//menu
+cout << "Menu" << endl;
+cout << "1. Pobierz/wprowadz dane" << endl;
+cout << "2. Usun dane z pamieci" << endl;
+cout << "3. Wyswietl dane" << endl;
+cout << "4. Koniec" << endl;
+//program
+do
+{
+    fflush(stdin);
+    cout << "Twoj wybor: " << endl;
+    znak=getch();
+    switch(znak)
     {
-    class baza *tmp=obiekt->nastepny;
-    obiekt->nastepny=obiekt->nastepny->nastepny;
-    delete tmp;
- };
- obiekt=obiekt->nastepny;
- i++;
- };
-};
-baza::baza(class baza *obiekt){
- this->nastepny=NULL;
- if (obiekt!=NULL) obiekt->nastepny=this;
-};
-baza::~baza(){
- cout << "Usuwam liste\n";
-};
+    case '1':
+        lista=new baza(NULL);
+        osoba=lista;
+        osoba->dane("Mateusz","Pawlak","1");
+        osoba=new baza(osoba);
+        osoba->dane("Mateusz","Pawlak","2");
+        osoba=new baza(osoba);
+        osoba->dane("Mateusz","Pawlak","3");
+        break;
+    case '2':
+        lista->wyswietl();
+        lista->kasuj(2);
+        lista->wyswietl();
+        break;
+    case '3':
+        lista->wyswietl();
+        break;
+    case '4':
+        cout << "Koniec" << endl;
+        break;
+    default:
+        cout << "Wybierz ponownie sposrod opcji 1-4!" << endl;
+
+    }
+}
+while(znak!='4');
+delete lista;
+return 0;
+}
