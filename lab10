@@ -18,9 +18,6 @@ public:
  baza(class baza *obiekt);
  ~baza();
 };
-
-
-
 #endif // KLASA_H_INCLUDED
 
 ----------------------------------------------------------------
