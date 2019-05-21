@@ -1,0 +1,126 @@
+klasa.h
+
+#ifndef KLASA_H_INCLUDED
+#define KLASA_H_INCLUDED
+#include <iostream>
+#include <string.h>
+using namespace std;
+// klasa rekord
+class rekord {
+private:
+public:
+ char imie[10];
+ char nazwisko[25];
+ char telefon[10];
+ char marka[10];
+ char typ[10];
+ char rok[10];
+ char cena[10];
+ class rekord *nastepny;
+ rekord(char *i,char *n,char *t);
+ rekord();
+};
+//klasa lista
+class lista : public rekord {
+private:
+ class rekord *pierwszy;
+public:
+ void wyswietl();
+ void dodaj(char *i,char *n,char *t);
+ lista(char *i="Imie", char*n="Nazwisko", char *t="Telefon");
+};
+#endif // KLASA_H_INCLUDED
+
+
+-------------------------------------------------------------------
+
+klasa.cpp
+
+#include "klasa.h"
+#include <fstream>
+#include <cstdlib>
+// klasa rekord
+rekord::rekord(char *i, char *n, char *t){
+ cout << "Rekord naglowkowy\n";
+ strcpy(imie,i);
+ strcpy(nazwisko,n);
+ strcpy(telefon,t);
+ nastepny=NULL;
+};
+rekord::rekord(){
+ cout << "Rekord normalny\n";
+};
+//klasa lista
+void lista::wyswietl(){
+ class rekord *obiekt=this->pierwszy;
+ while (obiekt!=NULL) {
+ cout<<obiekt->imie<<"\t";
+ cout<<obiekt->nazwisko<<"\t";
+ cout<<obiekt->telefon<<"\n";
+ obiekt=obiekt->nastepny;
+ };
+};
+void lista::dodaj(char *i,char *n,char *t){
+ class rekord *obiekt=this->pierwszy;
+ while (obiekt->nastepny!=NULL) {
+ obiekt=obiekt->nastepny;
+ };
+ obiekt->nastepny=new rekord;
+ strcpy(obiekt->nastepny->imie,i);
+ strcpy(obiekt->nastepny->nazwisko,n);
+ strcpy(obiekt->nastepny->telefon,t);
+ obiekt->nastepny->nastepny=NULL;
+};
+lista::lista(char *i, char *n, char *t) :
+rekord(i,n,t){
+ this->pierwszy=this;
+};
+
+----------------------------------------------------------------------
+
+main.cpp
+
+#include "klasa.h"
+#include "klasa.cpp"
+#include <conio.h>
+int main()
+{
+class lista *baza=NULL,
+*osoba=NULL;
+char znak;
+//menu
+cout << "Menu" << endl;
+cout << "1. Pobierz/wprowadz dane" << endl;
+cout << "2. Usun dane z pamieci" << endl;
+cout << "3. Wyswietl dane" << endl;
+cout << "4. Koniec" << endl;
+//program
+do
+{
+    fflush(stdin);
+    cout << "Twoj wybor: " << endl;
+    znak=getch();
+    switch(znak)
+    {
+    case '1':
+        baza=new lista();
+        baza->dodaj("Jan","Nowak","1");
+        baza->dodaj("Jan","Nowak","2");
+        baza->dodaj("Jan","Nowak","3");
+        break;
+    case '2':
+        break;
+    case '3':
+        baza->wyswietl();
+        break;
+    case '4':
+        cout <<"Koniec" << endl;
+        break;
+    default:
+        cout << "Wybierz ponownie sposrod opcji 1-4!" << endl;
+    }
+}
+while(znak!='4');
+delete baza;
+return 0;
+}
