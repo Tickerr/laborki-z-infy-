@@ -1,0 +1,232 @@
+#ifndef KLASA_H_INCLUDED
+#define KLASA_H_INCLUDED
+
+#include <iostream>
+#include <string.h>
+using namespace std;
+
+class dane
+{
+private:
+public:
+    char imie[10];
+    char nazwisko[25];
+    char telefon[10];
+    class dane *nastepny;
+    dane(char *i,char *n,char *t);
+    dane();
+};
+class lista:public dane
+{
+private:
+    class dane *pierwszy;
+public:
+    void wyswietl();
+    void dodaj(char *i,char *n,char *t);
+    lista(char *i="Imie", char *n="Nazwisko", char *t="Telefon");
+
+};
+class samochod
+{
+private:
+public:
+    char marka[10];
+    char typ[10];
+    char rok[10];
+    char cena[10];
+    class samochod *nastepny;
+    samochod(char *m, char *t, char *r, char *c);
+    samochod();
+};
+class lista2:public samochod
+{
+private:
+    class samochod *pierwszy;
+public:
+    void wyswietl2();
+    void dodaj2(char *m, char *t, char *r, char *c);
+    lista2(char *m="Marka", char *t="Typ", char *r="Rok", char *c="Cena");
+};
+#endif // KLASA_H_INCLUDED
+
+----------------------------------------------------------------
+
+#include "klasa.h"
+
+dane::dane(char *i, char *n, char *t){
+ cout << "Rekord naglowkowy\n";
+ strcpy(imie,i);
+ strcpy(nazwisko,n);
+ strcpy(telefon,t);
+ nastepny=NULL;
+};
+dane::dane(){
+ cout << "Rekord normalny\n";
+};
+void lista::wyswietl(){
+ class dane *obiekt=this->pierwszy;
+ while (obiekt!=NULL) {
+ cout<<obiekt->imie<<"\t";
+ cout<<obiekt->nazwisko<<"\t";
+ cout<<obiekt->telefon<<"\n";
+ obiekt=obiekt->nastepny;
+ };
+};
+void lista::dodaj(char *i,char *n,char *t){
+ class dane *obiekt=this->pierwszy;
+ while (obiekt->nastepny!=NULL) {
+ obiekt=obiekt->nastepny;
+ };
+ obiekt->nastepny=new dane;
+ strcpy(obiekt->nastepny->imie,i);
+ strcpy(obiekt->nastepny->nazwisko,n);
+ strcpy(obiekt->nastepny->telefon,t);
+ obiekt->nastepny->nastepny=NULL;
+};
+lista::lista(char *i, char *n, char *t) :
+dane(i,n,t){
+this->pierwszy=this;
+};
+samochod::samochod(char *m, char *t, char *r, char*c){
+ cout << "Rekord naglowkowy\n";
+ strcpy(marka,m);
+ strcpy(typ,m);
+ strcpy(rok,r);
+ strcpy(cena,c);
+ nastepny=NULL;
+};
+samochod::samochod(){
+ cout << "Rekord normalny\n";
+};
+void lista2::wyswietl2(){
+ class samochod *obiekt=this->pierwszy;
+ while (obiekt!=NULL) {
+ cout<<obiekt->marka<<"\t";
+ cout<<obiekt->typ<<"\t";
+ cout<<obiekt->rok<<"\t";
+ cout<<obiekt->cena<<"\n";
+ obiekt=obiekt->nastepny;
+ };
+};
+void lista2::dodaj2(char *m,char *t,char *r, char*c){
+ class samochod *obiekt=this->pierwszy;
+ while (obiekt->nastepny!=NULL) {
+ obiekt=obiekt->nastepny;
+ };
+ obiekt->nastepny=new samochod;
+ strcpy(obiekt->nastepny->marka,m);
+ strcpy(obiekt->nastepny->typ,t);
+ strcpy(obiekt->nastepny->rok,r);
+ strcpy(obiekt->nastepny->cena,c);
+ obiekt->nastepny->nastepny=NULL;
+};
+lista2::lista2(char *m, char *t, char *r, char*c) :
+samochod(m,t,r,c){
+ this->pierwszy=this;
+};
+
+------------------------------------------------------------
+
+#include "klasa.h"
+#include "klasa.cpp"
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+
+char pimie[10];
+char pnazwisko[10];
+char ptelefon[10];
+
+char pmarka[10];
+char ptyp[10];
+char prok[10];
+char pcena[10];
+int wybor;
+int wyborbaz;
+
+
+int main() {
+
+    cout<<"Wybierz baze na ktorej chcesz operowac: \n1-osoby \n2-samochody";
+    wyborbaz=getch();
+
+    if(wyborbaz=='1'){
+
+class lista *baza;
+ baza=new lista();
+
+ do{
+system("cls");
+
+cout<<"MENU"<<endl;
+cout<<"1. Dodaj do bazy"<<endl;
+cout<<"2. Wyswietl baze"<<endl;
+cout<<"3. Koniec"<<endl;
+
+wybor=getch();
+
+switch(wybor){
+case '1':
+cout<<"Imie:";
+cin>>pimie;
+cout<<"Nazwisko:";
+cin>>pnazwisko;
+cout<<"Telefon:";
+cin>>ptelefon;
+baza->dodaj(pimie, pnazwisko, ptelefon);
+break;
+case '2':
+baza->wyswietl();
+getch();
+break;
+cout << "Koniec" << endl;
+case '3':
+break;
+default:
+    cout << "Wybierz jeszcze raz" << endl;
+};
+}while(wybor!='3');
+};
+
+
+if(wyborbaz=='2'){
+
+class lista2 *baza2;
+baza2=new lista2();
+
+ do{
+system("cls");
+
+cout<<"MENU"<<endl;
+cout<<"1. Dodaj do bazy"<<endl;
+cout<<"2. Wyswietl baze"<<endl;
+cout<<"3. Koniec"<<endl;
+
+wybor=getch();
+
+switch(wybor){
+case '1':
+cout<<"Marka:";
+cin>>pmarka;
+cout<<"Typ:";
+cin>>ptyp;
+cout<<"Rok:";
+cin>>prok;
+cout<<"Cena:";
+cin>>pcena;
+baza2->dodaj2(pmarka,ptyp,prok,pcena);
+break;
+case '2':
+baza2->wyswietl2();
+getch();
+break;
+case '3':
+cout << "Koniec" << endl;
+break;
+default:
+    cout << "Wybierz ponownie" << endl;
+};
+}while(wybor!=3);
+    }
+return 0;
+};
