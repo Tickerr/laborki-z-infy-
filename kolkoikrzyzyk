@@ -1,0 +1,164 @@
+klasa.h
+
+#ifndef KLASA_H_INCLUDED
+#define KLASA_H_INCLUDED
+#include <iostream>
+using namespace std;
+class kik
+{
+public:
+   void plansza();
+   int sprawdz();
+};
+
+
+#endif // KLASA_H_INCLUDED
+
+
+--------------------------------------------------------------------
+
+klasa.cpp
+
+#include <iostream>
+#include <cstdlib>
+#include "klasa.h"
+using namespace std;
+
+char rys[10] = {'o','1','2','3','4','5','6','7','8','9'};
+//sprawdzanie, 1 to koniec gry z czyjas wygrana, 0 to remis, -1 to kontynuacja gry
+int kik::sprawdz()
+{
+    if (rys[1] == rys[2] && rys[2] == rys[3])
+
+        return 1;
+    else if (rys[4] == rys[5] && rys[5] == rys[6])
+
+        return 1;
+    else if (rys[7] == rys[8] && rys[8] == rys[9])
+
+        return 1;
+    else if (rys[1] == rys[4] && rys[4] == rys[7])
+
+        return 1;
+    else if (rys[2] == rys[5] && rys[5] == rys[8])
+
+        return 1;
+    else if (rys[3] == rys[6] && rys[6] == rys[9])
+
+        return 1;
+    else if (rys[1] == rys[5] && rys[5] == rys[9])
+
+        return 1;
+    else if (rys[3] == rys[5] && rys[5] == rys[7])
+
+        return 1;
+    else if (rys[1] != '1' && rys[2] != '2' && rys[3] != '3'
+                    && rys[4] != '4' && rys[5] != '5' && rys[6] != '6'
+                  && rys[7] != '7' && rys[8] != '8' && rys[9] != '9')
+
+        return 0;
+    else
+        return -1;
+};
+//rysowanie planszy
+void kik::plansza()
+{
+    system("cls");
+    cout << "\n\t\t\t\t\tWitaj w grze Kolko i krzyzyk\n\n";
+
+    cout << "Gracz 1 to (X), a Gracz 2 to (O)" << endl << endl;
+    cout << endl;
+
+    cout << "     |     |     " << endl;
+    cout << "  " << rys[1] << "  |  " << rys[2] << "  |  " << rys[3] << endl;
+
+    cout << "_____|_____|_____" << endl;
+    cout << "     |     |     " << endl;
+
+    cout << "  " << rys[4] << "  |  " << rys[5] << "  |  " << rys[6] << endl;
+
+    cout << "_____|_____|_____" << endl;
+    cout << "     |     |     " << endl;
+
+    cout << "  " << rys[7] << "  |  " << rys[8] << "  |  " << rys[9] << endl;
+
+    cout << "     |     |     " << endl << endl;
+};
+
+
+--------------------------------------------------------------------
+
+main.cpp
+
+#include <iostream>
+#include <cstdlib>
+#include "klasa.cpp"
+#include "klasa.h"
+using namespace std;
+
+int main()
+{
+	int gracz = 1,i,wybor;
+    class kik gra;
+    char cyfra;
+    do
+    {
+        gra.plansza();
+        gracz=(gracz%2)?1:2;
+
+        cout << "Gracz " << gracz << ", wybierz pole.  ";
+        cin >> wybor;
+
+        cyfra=(gracz == 1) ? 'X' : 'O';
+
+        if (wybor == 1 && rys[1] == '1')
+
+            rys[1] = cyfra;
+        else if (wybor == 2 && rys[2] == '2')
+
+            rys[2] = cyfra;
+        else if (wybor == 3 && rys[3] == '3')
+
+            rys[3] = cyfra;
+        else if (wybor == 4 && rys[4] == '4')
+
+            rys[4] = cyfra;
+        else if (wybor == 5 && rys[5] == '5')
+
+            rys[5] = cyfra;
+        else if (wybor == 6 && rys[6] == '6')
+
+            rys[6] = cyfra;
+        else if (wybor == 7 && rys[7] == '7')
+
+            rys[7] = cyfra;
+        else if (wybor == 8 && rys[8] == '8')
+
+            rys[8] = cyfra;
+        else if (wybor == 9 && rys[9] == '9')
+
+            rys[9] = cyfra;
+        else
+        {
+            cout<<"Nieprawidlowy wybor";
+
+            gracz--;
+            cin.ignore();
+            cin.get();
+        }
+        i=gra.sprawdz();
+
+        gracz++;
+    }
+    while(i==-1);
+    gra.plansza();
+    if(i==1)
+
+        cout<<"==>\aGracz "<<--gracz<<" wygral! Gratuluje :)  ";
+    else
+        cout<<"==>\aRemis!";
+
+    cin.ignore();
+    cin.get();
+    return 0;
+}
